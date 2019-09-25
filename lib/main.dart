@@ -6,6 +6,9 @@ import 'package:flutter/rendering.dart';
 import 'routers/Application.dart';
 import 'routers/routers.dart';
 import 'package:calendar/utils/analytics.dart' as Analytics;
+import 'package:calendar/view/home.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'generated/i18n.dart';
 
 void main() async {
   await SpUtil.getInstance();
@@ -22,7 +25,7 @@ class MyApp extends  StatefulWidget{
   }
 
   @override
-  State createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -37,19 +40,25 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  showHomePage(){
+    return HomePage();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: '日历',
+      title: "calendar",
       theme: new ThemeData.light(),
-      home: new Scaffold(body: showWelcomePage()),
+      home: new Scaffold(body: showHomePage()),
       onGenerateRoute: Application.router.generator,
       navigatorObservers: <NavigatorObserver>[Analytics.observer],
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
     );
-
-  }
-
-  showWelcomePage(){
 
   }
 
