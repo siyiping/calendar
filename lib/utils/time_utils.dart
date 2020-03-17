@@ -31,9 +31,23 @@ class TimeUtils {
     return days;
   }
 
-  static DateTime getEndDateOfMonth(int year, int month) {
-    int days = getDayOfMonth(year, month);
-    return new DateTime(year, month, days);
+  static DateTime getBeginDateOfMonth(int year, int month) {
+    return new DateTime(year, month, 1);
   }
 
+  static DateTime getEndDateOfMonth(int year, int month) {
+    return new DateTime(year, month, getDayOfMonth(year, month));
+  }
+
+  static int getWeekNum(int year, int month) {
+    DateTime now = new DateTime.utc(year, month, 1);
+    int weekNum = 5;
+    if (now.weekday == DateTime.monday && 28 == TimeUtils.getDayOfMonth(year, month)) {
+      weekNum = 4;
+    } else if (now.weekday - 1 + TimeUtils.getDayOfMonth(year, month) > 35) {
+      weekNum = 6;
+    }
+    print("table  row  num $weekNum");
+    return weekNum;
+  }
 }
